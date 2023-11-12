@@ -70,7 +70,8 @@ export const registerEvent = async (req: AuthRequest, res: Response) => {
           // we have to go through each objects and filter that object whose eventName is equal to EventName
 
           const filteredInvite = acceptedInvite.registrationInvite.filter(
-            (invite) => invite.eventName === EventName
+            (invite) =>
+              invite.eventName === EventName && invite.teamName === TeamName
           );
 
           if (filteredInvite.length > 0) {
@@ -100,9 +101,10 @@ export const registerEvent = async (req: AuthRequest, res: Response) => {
             }
 
             // find existing registration
-            const existingRegistration = await Event.find({
+            const existingRegistration = await Event.findOne({
               leaderName: user.email,
               eventName: EventName,
+              teamName: TeamName,
             });
 
             if (existingRegistration) {
@@ -160,6 +162,7 @@ export const registerEvent = async (req: AuthRequest, res: Response) => {
             // isGroupEvent,
             registeredAt: moment.tz("Asia/Kolkata").format("DD-MM-YY h:mma"),
             soloParticipantName: user.email,
+            members: undefined,
           });
 
           await event.save();

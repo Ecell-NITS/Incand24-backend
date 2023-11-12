@@ -127,12 +127,11 @@ export const verifyInvite = async (req: Request, res: Response) => {
       } else {
         // check if the token is correct or not
         const uniqueToken = filteredInvite[0].uniqueToken;
-        console.log("uniqueToken:", uniqueToken);
-        console.log("token:", token);
-        // console.log("uniqueToken:",uniqueToken)
         if (!uniqueToken) {
           return res.status(400).json({ error: "Invite link not found" });
         }
+        console.log("uniqueToken:", uniqueToken);
+        console.log("token:", token);
         if (uniqueToken !== token) {
           return res.status(400).json({ error: "Invalid token" });
         } else {
@@ -146,18 +145,20 @@ export const verifyInvite = async (req: Request, res: Response) => {
               filtertedArrayOfTeamMembers[0].teamMembers
             );
             if (
-              filtertedArrayOfTeamMembers[0].teamMembers.includes(memberEmail)
+              !filtertedArrayOfTeamMembers[0].teamMembers.includes(memberEmail)
             ) {
-              return res
-                .status(400)
-                .json({ error: "already accepted as a team member" });
-            } else {
               filtertedArrayOfTeamMembers[0].teamMembers.push(memberEmail);
+              await teamLeader.save();
               return res.status(200).json({
                 success: true,
-                message:
-                  "invite link verified and member added to teamLeader's team",
+                message: `invite link verified and member added to ${fromEmail}'s team`,
               });
+            } else {
+              return res
+                .status(400)
+                .json({
+                  error: `${memberEmail} already accepted as a team member in ${teamNameFromUrl} with the team leader ${fromEmail}`,
+                });
             }
           } else {
             // filtertedArrayOfTeamMembers[0].teamMembers.push(memberEmail);
@@ -180,9 +181,9 @@ export const verifyInvite = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Invite link not found" });
     }
 
-    return res.status(200).json({
-      message: "Invite link verified",
-    });
+    // return res.status(200).json({
+    //   message: "Invite link verified",
+    // });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Internal Server Error" });
