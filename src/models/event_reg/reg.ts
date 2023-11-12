@@ -3,6 +3,7 @@ import mongoose, { Document } from "mongoose";
 type UserDocument = Document & {
   eventName: string;
   leaderName: string;
+  leaderEmail: string;
   teamName: string;
   members: [string];
   // isGroupEvent: boolean;
@@ -13,6 +14,7 @@ type UserDocument = Document & {
 const EventRegistrationSchema = new mongoose.Schema<UserDocument>({
   eventName: String,
   leaderName: String,
+  leaderEmail: String,
   teamName: String,
   members: [String],
   // isGroupEvent: Boolean,

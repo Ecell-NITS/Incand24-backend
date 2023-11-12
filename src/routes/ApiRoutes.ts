@@ -14,6 +14,7 @@ import { verify2faOtp } from "../controllers/LocalAuth/2fa/verify2faotp";
 import { registerEvent } from "../controllers/EventsRegistration/Register";
 import { sendInvite } from "../controllers/EventsRegistration/Invite/sendInvite";
 import { verifyInvite } from "../controllers/EventsRegistration/Invite/verifyInvite";
+import { fetchRegisteredEvents } from "../controllers/fetchRegisteredEvents/TeamLeader";
 
 const router = express.Router();
 
@@ -69,3 +70,9 @@ router.post("/sendinvite", SendInviteHandler);
 
 // verify invite link
 router.post("/verifyinvitelink", verifyInvite);
+
+// fetch registered events
+const FetchRegisteredEventsHandler = (req: Request, res: Response) => {
+  fetchRegisteredEvents(req as AuthRequest, res);
+};
+router.get("/getregisteredevents", FetchRegisteredEventsHandler);

@@ -130,8 +130,8 @@ export const verifyInvite = async (req: Request, res: Response) => {
         if (!uniqueToken) {
           return res.status(400).json({ error: "Invite link not found" });
         }
-        console.log("uniqueToken:", uniqueToken);
-        console.log("token:", token);
+        // console.log("uniqueToken:", uniqueToken);
+        // console.log("token:", token);
         if (uniqueToken !== token) {
           return res.status(400).json({ error: "Invalid token" });
         } else {
@@ -140,10 +140,10 @@ export const verifyInvite = async (req: Request, res: Response) => {
           // console.log(memberEmail)
           // console.log(filtertedArrayOfTeamMembers)
           if (filtertedArrayOfTeamMembers.length > 0) {
-            console.log(
-              "filtertedArrayOfTeamMembers:",
-              filtertedArrayOfTeamMembers[0].teamMembers
-            );
+            // console.log(
+            //   "filtertedArrayOfTeamMembers:",
+            //   filtertedArrayOfTeamMembers[0].teamMembers
+            // );
             if (
               !filtertedArrayOfTeamMembers[0].teamMembers.includes(memberEmail)
             ) {
@@ -154,11 +154,9 @@ export const verifyInvite = async (req: Request, res: Response) => {
                 message: `invite link verified and member added to ${fromEmail}'s team`,
               });
             } else {
-              return res
-                .status(400)
-                .json({
-                  error: `${memberEmail} already accepted as a team member in ${teamNameFromUrl} with the team leader ${fromEmail}`,
-                });
+              return res.status(400).json({
+                error: `${memberEmail} already accepted as a team member in ${teamNameFromUrl} with the team leader ${fromEmail}`,
+              });
             }
           } else {
             // filtertedArrayOfTeamMembers[0].teamMembers.push(memberEmail);
