@@ -102,7 +102,7 @@ export const registerEvent = async (req: AuthRequest, res: Response) => {
 
             // find existing registration
             const existingRegistration = await Event.findOne({
-              leaderName: user.email,
+              leaderEmail: user.email,
               eventName: EventName,
               teamName: TeamName,
             });
@@ -113,7 +113,8 @@ export const registerEvent = async (req: AuthRequest, res: Response) => {
               });
             } else {
               const event = new Event({
-                leaderName: user.email,
+                leaderName: user.name,
+                leaderEmail: user.email,
                 eventName: EventName,
                 teamName: TeamName,
                 members,

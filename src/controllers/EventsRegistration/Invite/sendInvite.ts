@@ -12,6 +12,8 @@ import moment from "moment-timezone";
 // payload: email, eventName, teamName
 // role:any
 
+// condition: only team leader should fill the form.
+
 export const sendInvite = (req: AuthRequest, res: Response) => {
   verifyToken(req, res, async () => {
     isEmail(req, res, async () => {
