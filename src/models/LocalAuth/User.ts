@@ -10,6 +10,16 @@ type UserDocument = Document & {
   tokenExpiresAt: string | undefined;
   isVerified: boolean;
   is2faEnabled: boolean;
+  registrationInvite: {
+    eventName: string;
+    teamMembers: [string];
+  }[];
+  inviteLink: {
+    leaderEmail: string | undefined;
+    eventName: string | undefined;
+    expiresAt: string | undefined;
+    uniqueToken: string | undefined;
+  }[];
 };
 
 const userSchema = new mongoose.Schema<UserDocument>({
@@ -48,6 +58,22 @@ const userSchema = new mongoose.Schema<UserDocument>({
     type: Boolean,
     default: false,
   },
+  registrationInvite: [
+    {
+      //array of objects
+      eventName: String,
+      teamMembers: [String],
+    },
+  ],
+  inviteLink: [
+    {
+      //array of objects
+      leaderEmail: { type: String },
+      eventName: { type: String },
+      uniqueToken: { type: String },
+      expiresAt: { type: String },
+    },
+  ],
 });
 
 export const User = mongoose.model<UserDocument>(

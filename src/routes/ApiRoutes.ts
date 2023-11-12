@@ -11,6 +11,9 @@ import { sendResetPwdLink } from "../controllers/LocalAuth/magiclink/forgotpassw
 import { resetPwd } from "../controllers/LocalAuth/magiclink/forgotpassword/Resetpassword";
 import { toggle2fa } from "../controllers/LocalAuth/2fa/toggle2fa";
 import { verify2faOtp } from "../controllers/LocalAuth/2fa/verify2faotp";
+import { registerEvent } from "../controllers/EventsRegistration/Register";
+import { sendInvite } from "../controllers/EventsRegistration/Invite/sendInvite";
+import { verifyInvite } from "../controllers/EventsRegistration/Invite/verifyInvite";
 
 const router = express.Router();
 
@@ -51,3 +54,18 @@ router.put("/toggle2fa", twoFaHandler);
 //2fa
 router.post("/verify2faotp", verify2faOtp);
 export default router;
+
+// event registration
+const EventRegistrationHandler = (req: Request, res: Response) => {
+  registerEvent(req as AuthRequest, res);
+};
+router.post("/regsiterevent", EventRegistrationHandler);
+
+// send invite link to join team
+const SendInviteHandler = (req: Request, res: Response) => {
+  sendInvite(req as AuthRequest, res);
+};
+router.post("/sendinvite", SendInviteHandler);
+
+// verify invite link
+router.post("/verifyinvitelink", verifyInvite);
