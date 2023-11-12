@@ -12,11 +12,13 @@ type UserDocument = Document & {
   is2faEnabled: boolean;
   registrationInvite: {
     eventName: string;
+    teamName: string;
     teamMembers: [string];
   }[];
   inviteLink: {
     leaderEmail: string | undefined;
     eventName: string | undefined;
+    teamName: string | undefined;
     expiresAt: string | undefined;
     uniqueToken: string | undefined;
   }[];
@@ -62,6 +64,7 @@ const userSchema = new mongoose.Schema<UserDocument>({
     {
       //array of objects
       eventName: String,
+      teamName: String,
       teamMembers: [String],
     },
   ],
@@ -69,6 +72,7 @@ const userSchema = new mongoose.Schema<UserDocument>({
     {
       //array of objects
       leaderEmail: { type: String },
+      teamName: { type: String },
       eventName: { type: String },
       uniqueToken: { type: String },
       expiresAt: { type: String },
