@@ -56,6 +56,11 @@ export const sendInvite = (req: AuthRequest, res: Response) => {
         const EventName = eventName.trim();
         const TeamName = teamName.trim();
 
+        if (Email === user.email) {
+          return res
+            .status(400)
+            .json({ error: "member must be other than team leader" });
+        }
         const inviteLinkUser = await User.findOne({ email: Email });
         if (!inviteLinkUser) {
           return res
@@ -66,7 +71,7 @@ export const sendInvite = (req: AuthRequest, res: Response) => {
         // generate the token
         const uniqueToken = crypto.randomBytes(48).toString("hex") as string;
 
-        const emailLink = `${process.env.website}/invite/${user.email}/to/${Email}/token?/${uniqueToken}/${EventName}`;
+        const emailLink = `${process.env.website}/invite/${user.email}/to/${Email}/token?/${uniqueToken}/${EventName}/${TeamName}`;
 
         sendEmail(
           Email,
@@ -97,7 +102,9 @@ export const sendInvite = (req: AuthRequest, res: Response) => {
 
         const filtertedInvite = inviteLinkUser.inviteLink.filter(
           (invite) =>
-            invite.eventName === EventName && invite.leaderEmail === user.email
+            invite.eventName === EventName &&
+            invite.leaderEmail === user.email &&
+            invite.teamName === TeamName
         );
 
         if (filtertedInvite.length > 0) {
@@ -113,6 +120,7 @@ export const sendInvite = (req: AuthRequest, res: Response) => {
             eventName: EventName,
             uniqueToken,
             expiresAt: tokenExpiresAt,
+            teamName: TeamName,
           };
 
           inviteLinkUser.inviteLink.push(newInvite);

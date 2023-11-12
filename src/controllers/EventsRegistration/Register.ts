@@ -30,11 +30,11 @@ export const registerEvent = async (req: AuthRequest, res: Response) => {
         soloParticipantName: string;
       };
 
-      if (!isGroupEvent) {
-        return res.status(400).json({
-          error: "required",
-        });
-      }
+      // if (!isGroupEvent) {
+      //   return res.status(400).json({
+      //     error: "required",
+      //   });
+      // }
 
       const EventName = eventName.trim();
       const TeamName = teamName.trim();
@@ -53,7 +53,7 @@ export const registerEvent = async (req: AuthRequest, res: Response) => {
             const user = await User.findOne({ email: members[i] });
             if (!user) {
               return res.status(400).json({
-                error: "User not found",
+                error: `ask ${members[i]} to signup first`,
               });
             }
           }
@@ -70,56 +70,69 @@ export const registerEvent = async (req: AuthRequest, res: Response) => {
           // we have to go through each objects and filter that object whose eventName is equal to EventName
 
           const filteredInvite = acceptedInvite.registrationInvite.filter(
-            (invite) => invite.eventName === EventName
+            (invite) =>
+              invite.eventName === EventName && invite.teamName === TeamName
           );
 
-          // now go through teamMembers array of that filteredInvite object and check if members array contains all the emails of teamMembers array
+          if (filteredInvite.length > 0) {
+            console.log(filteredInvite.length);
 
-          const teamMembers = filteredInvite[0].teamMembers;
-          // now check if members array contains all the emails of teamMembers array
-          // if yes then register the event
+            // now go through teamMembers array of that filteredInvite object and check if members array contains all the emails of teamMembers array
+            console.log("filteredInvite[0]", filteredInvite);
+            const teamMembers = filteredInvite[0].teamMembers;
 
-          // for (let i = 0; i < members.length; i++) {
+            // now check if members array contains all the emails of teamMembers array
+            // if yes then register the event
 
-          for (let i = 0; i < members.length; i++) {
-            // if (!(acceptedInvite?.registrationInvite.teamMembers.includes(members[i]))) {
-            //     return res.status(400).json({
-            //         error: "User hasn't accepted the invite yet"
-            //     })
-            // }
+            // for (let i = 0; i < members.length; i++) {
 
-            if (!teamMembers.includes(members[i])) {
-              return res.status(400).json({
-                error: "User hasn't accepted the invite yet",
-              });
+            for (let i = 0; i < members.length; i++) {
+              // if (!(acceptedInvite?.registrationInvite.teamMembers.includes(members[i]))) {
+              //     return res.status(400).json({
+              //         error: "User hasn't accepted the invite yet"
+              //     })
+              // }
+
+              if (!teamMembers.includes(members[i])) {
+                return res.status(400).json({
+                  error: `${members[i]} hasn't accepted the invite yet`,
+                });
+              }
             }
-          }
 
-          // find existing registration
-          const existingRegistration = await Event.find({
-            leaderName: user.email,
-            eventName: EventName,
-          });
-
-          if (existingRegistration) {
-            return res.status(400).json({
-              error: "You have already registered for this event",
-            });
-          } else {
-            const event = new Event({
+            // find existing registration
+            const existingRegistration = await Event.findOne({
               leaderName: user.email,
               eventName: EventName,
               teamName: TeamName,
-              members,
-              // isGroupEvent,
-              registeredAt: moment.tz("Asia/Kolkata").format("DD-MM-YY h:mma"),
-              soloParticipantName: undefined,
             });
-            await event.save();
-            return res.status(200).json({
-              success: true,
-              message: "Registered successfully",
-            });
+
+            if (existingRegistration) {
+              return res.status(400).json({
+                error: "You have already registered for this event",
+              });
+            } else {
+              const event = new Event({
+                leaderName: user.email,
+                eventName: EventName,
+                teamName: TeamName,
+                members,
+                // isGroupEvent,
+                registeredAt: moment
+                  .tz("Asia/Kolkata")
+                  .format("DD-MM-YY h:mma"),
+                soloParticipantName: undefined,
+              });
+              await event.save();
+              return res.status(200).json({
+                success: true,
+                message: "Registered successfully",
+              });
+            }
+          } else {
+            return res
+              .status(404)
+              .json({ error: "No such filtered Event exists" });
           }
 
           // individual event registration
@@ -131,12 +144,12 @@ export const registerEvent = async (req: AuthRequest, res: Response) => {
           }
 
           // find existing registration
-          const existingRegistration = await Event.find({
+          const existingRegistration = await Event.findOne({
             soloParticipantName: user.email,
             eventName: EventName,
           });
 
-          if (!existingRegistration) {
+          if (existingRegistration) {
             return res.status(400).json({
               error: "You have already registered for this event",
             });
@@ -149,6 +162,7 @@ export const registerEvent = async (req: AuthRequest, res: Response) => {
             // isGroupEvent,
             registeredAt: moment.tz("Asia/Kolkata").format("DD-MM-YY h:mma"),
             soloParticipantName: user.email,
+            members: undefined,
           });
 
           await event.save();

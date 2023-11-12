@@ -59,7 +59,7 @@ export default router;
 const EventRegistrationHandler = (req: Request, res: Response) => {
   registerEvent(req as AuthRequest, res);
 };
-router.post("/regsiterevent", EventRegistrationHandler);
+router.post("/registerevent", EventRegistrationHandler);
 
 // send invite link to join team
 const SendInviteHandler = (req: Request, res: Response) => {
