@@ -38,13 +38,11 @@ export const fetchRegisteredEvents = (req: AuthRequest, res: Response) => {
         const allSoloRegisteredEvents = await Event.find({
           soloParticipantName: user.email,
         });
-        return res
-          .status(200)
-          .json({
-            allRegisteredEventsAsTeamLeader,
-            otherRegisteredEvents,
-            allSoloRegisteredEvents,
-          });
+        return res.status(200).json({
+          allRegisteredEventsAsTeamLeader,
+          otherRegisteredEvents,
+          allSoloRegisteredEvents,
+        });
       } else if (user.role === "admin") {
         //
       }

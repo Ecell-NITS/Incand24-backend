@@ -17,7 +17,7 @@ export const signup = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Please fill all required fields" });
     }
 
-    const Semail = email.trim();
+    const Semail = email.toLowerCase().trim();
     const Sname = name.trim();
     const Spassword = password.trim();
     const SconfirmPassword = confirmPassword.trim();

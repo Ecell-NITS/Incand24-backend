@@ -10,6 +10,7 @@ type UserDocument = Document & {
   tokenExpiresAt: string | undefined;
   isVerified: boolean;
   is2faEnabled: boolean;
+  whichEventHead: [string];
   registrationInvite: [
     {
       eventName: string;
@@ -49,6 +50,9 @@ const userSchema = new mongoose.Schema<UserDocument>({
   token: {
     type: String,
     default: undefined,
+  },
+  whichEventHead: {
+    type: [String],
   },
   tokenExpiresAt: {
     type: String,
