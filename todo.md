@@ -1,0 +1,3 @@
+- for each event's team head, they should be able to fetch the all registration from their dashboard
+- during the time of event registration, team leader should get suggestion of the registered user's email as he types in
+- one solution can be add the 

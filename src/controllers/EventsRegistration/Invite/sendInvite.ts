@@ -54,7 +54,7 @@ export const sendInvite = (req: AuthRequest, res: Response) => {
         }
 
         // trim the inputs
-        const Email = email.trim();
+        const Email = email.toLowerCase().trim();
         const EventName = eventName.trim();
         const TeamName = teamName.trim();
 

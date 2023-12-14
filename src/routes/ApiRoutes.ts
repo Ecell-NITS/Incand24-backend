@@ -15,6 +15,11 @@ import { registerEvent } from "../controllers/EventsRegistration/Register";
 import { sendInvite } from "../controllers/EventsRegistration/Invite/sendInvite";
 import { verifyInvite } from "../controllers/EventsRegistration/Invite/verifyInvite";
 import { fetchRegisteredEvents } from "../controllers/fetchRegisteredEvents/TeamLeader";
+import { fetchAllAccounts } from "../controllers/superadmin/FetchAllAccounts";
+import { elevateToAdmin } from "../controllers/superadmin/ElevateToAdmin";
+import { demoteRole } from "../controllers/superadmin/DemoteToClient";
+import { getEventsForAdmin } from "../controllers/fetchRegisteredEvents/admin/getEventSpecificReg";
+import { addEventNameToAdmin } from "../controllers/superadmin/addEventNameToAdmin";
 
 const router = express.Router();
 
@@ -76,3 +81,33 @@ const FetchRegisteredEventsHandler = (req: Request, res: Response) => {
   fetchRegisteredEvents(req as AuthRequest, res);
 };
 router.get("/getregisteredevents", FetchRegisteredEventsHandler);
+
+// get all accounts
+const GetAllAccountsHandler = (req: Request, res: Response) => {
+  fetchAllAccounts(req as AuthRequest, res);
+};
+router.get("/getallaccounts", GetAllAccountsHandler);
+
+// elevate to admin
+const PromoteRoleHandler = (req: Request, res: Response) => {
+  elevateToAdmin(req as AuthRequest, res);
+};
+router.put("/elevaterole", PromoteRoleHandler);
+
+// demote to client
+const DemoteRoleHandler = (req: Request, res: Response) => {
+  demoteRole(req as AuthRequest, res);
+};
+router.put("/demoterole", DemoteRoleHandler);
+
+// add eventName to the admin by superadmin only
+const addEventNamesToAdmin = (req: Request, res: Response) => {
+  addEventNameToAdmin(req as AuthRequest, res);
+};
+router.put("/addeventname", addEventNamesToAdmin);
+
+// get event specific registration for the admins only
+const getEventSpecificRegistration = (req: Request, res: Response) => {
+  getEventsForAdmin(req as AuthRequest, res);
+};
+router.get("/getalleventsforadmin", getEventSpecificRegistration);
