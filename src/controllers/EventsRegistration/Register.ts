@@ -26,7 +26,7 @@ export const registerEvent = async (req: AuthRequest, res: Response) => {
         isGroupEvent: boolean;
         eventName: string;
         teamName: string;
-        members: [string]; // [a0ewddityrjsustddfdwain@gmail.com, arjunsustain@pm.me]
+        members: string[]; // [a0ewddityrjsustddfdwain@gmail.com, arjunsustain@pm.me]
         soloParticipantName: string;
       };
 
