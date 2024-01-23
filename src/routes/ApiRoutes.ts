@@ -20,6 +20,7 @@ import { elevateToAdmin } from "../controllers/superadmin/ElevateToAdmin";
 import { demoteRole } from "../controllers/superadmin/DemoteToClient";
 import { getEventsForAdmin } from "../controllers/fetchRegisteredEvents/admin/getEventSpecificReg";
 import { addEventNameToAdmin } from "../controllers/superadmin/addEventNameToAdmin";
+import CARegistration from "../controllers/CampusAmbassador/CARegistration";
 
 const router = express.Router();
 
@@ -111,3 +112,6 @@ const getEventSpecificRegistration = (req: Request, res: Response) => {
   getEventsForAdmin(req as AuthRequest, res);
 };
 router.get("/getalleventsforadmin", getEventSpecificRegistration);
+
+//Campus Ambassador register route
+router.post("/CAregister", CARegistration);
