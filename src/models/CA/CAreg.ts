@@ -5,6 +5,8 @@ type UserDocument = Document & {
   email: string;
   phone: number;
   college: string;
+  role: string;
+  registeredAt: string;
 };
 
 const CARegistrationSchema = new mongoose.Schema<UserDocument>({
@@ -31,7 +33,14 @@ const CARegistrationSchema = new mongoose.Schema<UserDocument>({
     type: Number,
     required: true,
     trim: true,
-    length: 10,
+    // length: 10,
+  },
+  role: {
+    type: String,
+    default: "client",
+  },
+  registeredAt: {
+    type: String,
   },
 });
 
