@@ -10,15 +10,15 @@ type UserDocument = Document & {
   tokenExpiresAt: string | undefined;
   isVerified: boolean;
   is2faEnabled: boolean;
-  whichEventHead: [string];
-  registrationInvite: [
-    {
-      eventName: string;
-      teamName: string;
-      teamMembers: Array<string>;
-    }
-  ];
+  whichEventHead: string[]; // array of strings
+  registrationInvite: // array of objects
+  {
+    eventName: string;
+    teamName: string;
+    teamMembers: Array<string>;
+  }[];
   inviteLink: {
+    // array of objects
     leaderEmail: string | undefined;
     eventName: string | undefined;
     teamName: string | undefined;
