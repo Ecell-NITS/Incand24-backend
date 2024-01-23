@@ -1,4 +1,4 @@
-import { Request, Response, Router as router } from "express";
+import { Request, Response } from "express";
 import { CAreg } from "../../models/CA/CAreg";
 const CARegistration = async (req: Request, res: Response) => {
   // try {
