@@ -36,12 +36,10 @@ export const getEventsForAdmin = async (req: AuthRequest, res: Response) => {
             });
           }
         } else {
-          return res
-            .status(400)
-            .json({
-              error:
-                "No event name added to admin's eventTier i.e not any event head",
-            });
+          return res.status(400).json({
+            error:
+              "No event name added to admin's eventTier i.e not any event head",
+          });
         }
       } else {
         return res
