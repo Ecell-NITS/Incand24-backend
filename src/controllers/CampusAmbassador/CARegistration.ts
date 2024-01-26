@@ -27,6 +27,9 @@ const CARegistration = async (req: Request, res: Response) => {
     if (name.length > 50 || college.length > 100 || email.length > 50) {
       return res.status(400).json({ error: "details too long" });
     }
+    if (!(email.includes("@") && email.includes("."))) {
+      return res.status(400).json({ error: "Invalid email" });
+    }
     const existingReg = await CAreg.findOne({ email });
     if (existingReg) {
       return res
@@ -46,7 +49,7 @@ const CARegistration = async (req: Request, res: Response) => {
     return res.status(200).json({ message: "Registration successful" });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Register went wrong" });
+    return res.status(500).json({ error: "Register went wrong" });
   }
 };
 
