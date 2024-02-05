@@ -24,7 +24,7 @@ const CARegistration = async (req: Request, res: Response) => {
     name = name?.trim();
     college = college?.trim();
     email = email?.trim().toLowerCase();
-    if (name.length > 50 || college.length > 100 || email.length > 50) {
+    if (name.length > 49 || college.length > 99 || email.length > 49) {
       return res.status(400).json({ error: "details too long" });
     }
     if (!(email.includes("@") && email.includes("."))) {
