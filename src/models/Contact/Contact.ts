@@ -3,6 +3,7 @@ import mongoose, { Document } from "mongoose";
 type UserDocument = Document & {
   name: string;
   email: string;
+  contact: string;
   message: string;
   role: string;
   SentAt: string;
@@ -27,6 +28,9 @@ const ContactSchema = new mongoose.Schema<UserDocument>({
     unique: true,
     trim: true,
     maxlength: 50,
+  },
+  contact: {
+    type: String,
   },
   role: {
     type: String,

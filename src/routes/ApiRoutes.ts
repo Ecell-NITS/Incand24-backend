@@ -130,5 +130,6 @@ router.post("/contact", ContactUs);
 const getContact = (req: Request, res: Response) => {
   fetchContact(req as AuthRequest, res);
 };
+router.get("/fetchcontact", getContact);
 
 router.get("/fetchcaregs", getCaRegs);
