@@ -21,7 +21,9 @@ import { demoteRole } from "../controllers/superadmin/DemoteToClient";
 import { getEventsForAdmin } from "../controllers/fetchRegisteredEvents/admin/getEventSpecificReg";
 import { addEventNameToAdmin } from "../controllers/superadmin/addEventNameToAdmin";
 import CARegistration from "../controllers/CampusAmbassador/CARegistration";
+import ContactUs from "../controllers/Contact/Contact";
 import { fetchCaRegistrations } from "../controllers/CampusAmbassador/FetchCAregs";
+import { fetchContact } from "../controllers/Contact/FetchContact";
 
 const router = express.Router();
 
@@ -120,4 +122,13 @@ router.post("/CAregister", CARegistration);
 const getCaRegs = (req: Request, res: Response) => {
   fetchCaRegistrations(req as AuthRequest, res);
 };
+
+//Contact Us route
+
+router.post("/contact", ContactUs);
+
+const getContact = (req: Request, res: Response) => {
+  fetchContact(req as AuthRequest, res);
+};
+
 router.get("/fetchcaregs", getCaRegs);
