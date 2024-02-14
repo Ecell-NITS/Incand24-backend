@@ -24,6 +24,8 @@ import CARegistration from "../controllers/CampusAmbassador/CARegistration";
 import ContactUs from "../controllers/Contact/Contact";
 import { fetchCaRegistrations } from "../controllers/CampusAmbassador/FetchCAregs";
 import { fetchContact } from "../controllers/Contact/FetchContact";
+import PromRegistration from "../controllers/PromRegistration/PromReg";
+import { fetchPromRegistrations } from "../controllers/PromRegistration/fetchPromRegistrations";
 
 const router = express.Router();
 
@@ -133,3 +135,12 @@ const getContact = (req: Request, res: Response) => {
 router.get("/fetchcontact", getContact);
 
 router.get("/fetchcaregs", getCaRegs);
+
+// prom registration route
+router.post("/registration/prom", PromRegistration);
+
+const getPromRegs = (req: Request, res: Response) => {
+  fetchPromRegistrations(req as AuthRequest, res);
+};
+
+router.get("/fetchpromregs", getPromRegs);
