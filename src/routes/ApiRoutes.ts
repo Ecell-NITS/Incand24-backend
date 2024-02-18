@@ -26,6 +26,7 @@ import { fetchCaRegistrations } from "../controllers/CampusAmbassador/FetchCAreg
 import { fetchContact } from "../controllers/Contact/FetchContact";
 import PromRegistration from "../controllers/PromRegistration/PromReg";
 import { fetchPromRegistrations } from "../controllers/PromRegistration/fetchPromRegistrations";
+import { sendEvents } from "../controllers/eventsJson/sendEvents";
 
 const router = express.Router();
 
@@ -144,3 +145,4 @@ const getPromRegs = (req: Request, res: Response) => {
 };
 
 router.get("/fetchpromregs", getPromRegs);
+router.get("/eventsjson", sendEvents);
