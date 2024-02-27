@@ -55,12 +55,10 @@ export const sendEmailVerificationLink = async (
           `Click on this link to verify your email: ${verifyEmailLink} \n Link is valid for 60 minutes`
         );
 
-        return res
-          .status(200)
-          .json({
-            success: true,
-            message: "verification email sent sucessfully",
-          });
+        return res.status(200).json({
+          success: true,
+          message: "verification email sent sucessfully",
+        });
       }
     } catch (err) {
       console.error(err);

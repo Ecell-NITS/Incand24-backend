@@ -11,7 +11,7 @@ dotEnv.config();
 // app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(express.json());
 app.use(cors());
-redirect;
+app.use(redirect);
 connectToDb();
 app.use("/v1/api", ApiRoutes);
 

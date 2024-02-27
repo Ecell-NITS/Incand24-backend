@@ -33,7 +33,7 @@ export const login = async (req: Request, res: Response) => {
         password: string;
       };
 
-      email = email.toString().trim();
+      email = email.toString().toLowerCase().trim();
       password = password.toString().trim();
 
       if (!email || !password) {
@@ -79,12 +79,10 @@ export const login = async (req: Request, res: Response) => {
               { upsert: true }
             );
 
-            res
-              .status(200)
-              .json({
-                message: "Proceed to verify otp page",
-                userEmail: user.email,
-              });
+            res.status(200).json({
+              message: "Proceed to verify otp page",
+              userEmail: user.email,
+            });
             // const otpData = await twoFA.findOne({ email }).exec();
             // if (!otpData) {
             //   return res
