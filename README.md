@@ -1,11 +1,4 @@
-# Backend NodeJS Template with Typescript
-This template can be used as a boiler plate for building a backend nodejs application with typescript.
-
-
-## Features:
-  - Inbuilt account management. So you don't need to do every time you start building your backend project
-  - User registration and verification by email
-
+# Incand'24 REST API
 ## Getting Started
 ### Prerequisites
 
@@ -118,6 +111,9 @@ Route:
 /v1/api/resetpwd
 payload : token && newpwd && cnewpwd
 
+```
+```
+more routes to be added soon...
 ```
 
 ## Deployment
